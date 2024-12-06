@@ -50,4 +50,6 @@ public class As3_Team {
     public String toString() {
         return "Name: " + nickname + "  City: " + city + "  Division: "  + division + "  Wins: " + wins + "  Losses: " + losses + "  Goal Differential: " + goalDiff;
     }
+
+
 }
