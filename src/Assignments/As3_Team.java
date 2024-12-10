@@ -44,6 +44,20 @@ public class As3_Team {
         return goalDiff;
     }
 
+
+    //setters
+
+    public void setWins(int wins) {
+        this.wins = wins;
+    }
+
+    public void setLosses(int losses) {
+        this.losses = losses;
+    }
+
+    public void setGoalDiff(int goalDiff) {
+        this.goalDiff = goalDiff;
+    }
     //outputs
 
     @Override

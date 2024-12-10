@@ -11,7 +11,7 @@ public class As3_LeagueMain {
 
         while(true) {
 
-            System.out.println("Press 1 for a list of teams\nPress 2 to find the highest stats\nPress 3 to view divisions\nPress 4 to sort by goal differential\nPress 5 to update stats\nPress 6 to exit");
+            System.out.println("Press 1 for a list of teams\nPress 2 to find the highest stats\nPress 3 to view divisions\nPress 4 to sort by wins\nPress 5 to update stats\nPress 6 to exit");
 
 
             int choice = Library.input.nextInt();
@@ -25,16 +25,16 @@ public class As3_LeagueMain {
                 System.out.println();
             }//choice 1
             if (choice == 2) {
-                System.out.println("Under construction");
+                searchHigh(allTeams);
             }
             if (choice == 3) {
-                System.out.println("Under construction");
+                viewDivision(allTeams);
             }
             if (choice == 4) {
-                System.out.println("Under construction");
+                selectionSorIntList(allTeams);
             }
             if (choice == 5) {
-                System.out.println("Under construction");
+                statUpdate(allTeams);
             }
             if (choice == 6) {
                 saveFile("data/imaginary_teams.csv", allTeams);
@@ -100,10 +100,81 @@ public class As3_LeagueMain {
 
     }//end saveFile
 
-    public static void searchHigh(){
+    public static void searchHigh(ArrayList<As3_Team> teams){
+        As3_Team highestWins = teams.get(0);
+        As3_Team highestLosses = teams.get(0);
+        As3_Team highestGD = teams.get(0);
 
+
+        for (As3_Team team : teams) {
+            if (team.getWins() > highestWins.getWins()){
+                highestWins = team;
+            }
+            if (team.getLosses() > highestLosses.getLosses()) {
+                highestLosses = team;
+            }
+            if (team.getGoalDiff() > highestGD.getGoalDiff()) {
+                highestGD = team;
+
+            }
+
+        }
+        System.out.println("The highest wins are held by: " + highestWins.getNickname() + " in " + highestWins.getCity() + " with " + highestWins.getWins());
+        System.out.println("The highest losses are held by: " + highestLosses.getNickname() + " in " + highestLosses.getCity() + " with " + highestLosses.getLosses());
+        System.out.println("The highest GD are held by: " + highestGD.getNickname() + " in " + highestGD.getCity() + " with " + highestGD.getGoalDiff());
     }
 
+    public static void viewDivision(ArrayList<As3_Team> teams){
+        System.out.println("What div do you want to see? 1-3");
+        int input = Library.input.nextInt();
+        Library.input.nextLine();
 
+        for(As3_Team team : teams){
+            if(team.getDivision() == input){
+                System.out.println(team);
+            }
+        }
+    }
+
+    public static void selectionSorIntList(ArrayList<As3_Team> teams){
+
+
+        for (int i = 0; i < teams.size(); i++) {
+            int lowestIndex = 1;
+            for (int j = i+1; j < teams.size(); j++) {
+                if(teams.get(j).getWins() < teams.get(lowestIndex).getWins()){
+                    lowestIndex = j;
+                }
+            }
+
+            As3_Team tempTeam = teams.get(i);
+            teams.set(i, teams.get(lowestIndex));
+            teams.set(lowestIndex, tempTeam);
+        }
+    }
+
+    public static void statUpdate(ArrayList<As3_Team> teams){
+        System.out.println("Please enter game info");
+        System.out.println("What team? will default to first team if incorrect");
+        As3_Team selectedTeam = teams.getFirst();
+        String lfTeam = Library.input.nextLine();
+        for(As3_Team team : teams){
+            if(team.getNickname().equalsIgnoreCase(lfTeam)){
+                selectedTeam = team;
+                System.out.println(selectedTeam.getNickname() + " is selected");
+            }
+        }
+        System.out.println("win? y/n");
+        String lfWin = Library.input.nextLine();
+        if(lfWin.equals("y")){
+            selectedTeam.setWins(selectedTeam.getWins() + 1);
+        }else{
+            selectedTeam.setLosses(selectedTeam.getLosses() + 1);
+        }
+        System.out.println("Goal diff of match?");
+        int lfGD = Library.input.nextInt();
+        Library.input.nextLine();
+        selectedTeam.setGoalDiff(selectedTeam.getGoalDiff() + lfGD);
+    }
 
 }
