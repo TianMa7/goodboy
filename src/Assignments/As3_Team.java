@@ -1,4 +1,7 @@
 package Assignments;
+
+import java.util.ArrayList;
+import java.io.*;
 //instance
 public class As3_Team {
 
@@ -9,6 +12,10 @@ public class As3_Team {
     private int wins;
     private int losses;
     private int goalDiff;
+
+    private ArrayList<As4_Player> allPlayers = new ArrayList<>();
+
+
 
     public As3_Team( String n , String c , int d , int w , int l , int gd ){
         nickname = n;
@@ -44,6 +51,10 @@ public class As3_Team {
         return goalDiff;
     }
 
+    public void addPlayer(String n, int p, int g){
+        allPlayers.add(new As4_Player(n, p, g));
+    }
+
 
     //setters
 
@@ -63,6 +74,30 @@ public class As3_Team {
     @Override
     public String toString() {
         return "Name: " + nickname + "  City: " + city + "  Division: "  + division + "  Wins: " + wins + "  Losses: " + losses + "  Goal Differential: " + goalDiff;
+    }
+
+    public void printPlayers(){
+        for(As4_Player player : allPlayers){
+            System.out.println(player);
+        }
+    }
+
+    public String totalStats(){
+        int totGoals = 0;
+        for(As4_Player player : allPlayers){
+            totGoals += player.getGoalsScored();
+        }
+        return "Name: " + nickname + "  City: " + city + "  Division: "  + division + "  Wins: " + wins + "  Losses: " + losses + "  Goal Differential: " + goalDiff + " total goals: " + totGoals;
+    }
+
+    public void updatePlayers(){
+        System.out.println("what player");
+        String input4 = Library.input.nextLine();
+        for(As4_Player player : allPlayers){
+            if(player.getName().equalsIgnoreCase(input4)){
+                player.addGoal();
+            }
+        }
     }
 
 
